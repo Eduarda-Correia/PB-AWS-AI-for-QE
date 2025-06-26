@@ -1,0 +1,1 @@
+<!--Documentação detalhada do frontend (fornecida)-->

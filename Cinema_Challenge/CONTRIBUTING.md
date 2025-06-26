@@ -1,0 +1,1 @@
+<!--Guia de contribuição (pode ser usado como base para seu projeto)-->
