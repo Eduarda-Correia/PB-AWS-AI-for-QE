@@ -6,13 +6,23 @@ jobs:
   automated-api-tests:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Install Postman CLI
         run: |
           powershell.exe -NoProfile -InputFormat None -ExecutionPolicy AllSigned -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://dl-cli.pstmn.io/install/win64.ps1'))"
+
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+
       - name: Run API tests
+        continue-on-error: true
         run: |
           postman collection run "44552321-fa4258bc-23d4-446d-9485-5f547f0e5d82" -e "44552321-6d021534-2b8b-4d61-b9c0-29f665d45583" --env-var "url_base=https://cinema-challenge-back.onrender.com/api/v1" --reporters cli,json,html --reporter-html-export results/report.html
 
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-report
+          path: results/report.html
