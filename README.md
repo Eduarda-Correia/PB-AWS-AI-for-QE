@@ -11,7 +11,7 @@ Este projeto consiste na automação de testes funcionais para a aplicação Cin
 ## Instruções de Clonagem e Execução
 
 ```bash
-git clone https://github.com/seu-usuario/PB-AWS-AI-for-QE.git
+git clone https://github.com/Eduarda-Correia/PB-AWS-AI-for-QE.git
 cd PB-AWS-AI-for-QE/Cinema_Challenge
 pip install -r requirements.txt
 ```
