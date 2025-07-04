@@ -1,0 +1,1447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.1 (Python 3.13.5 on win32)" generated="2025-07-04T13:21:02.795230" rpa="false" schemaversion="5">
+<suite id="s1" name="Api" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api">
+<suite id="s1-s1" name="Auth" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api\auth">
+<suite id="s1-s1-s1" name="Auth" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api\auth\auth.robot">
+<test id="s1-s1-s1-t1" name="Login com usuário válido" line="9">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.175289" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.175185" elapsed="0.000228"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.174731" elapsed="0.000745"/>
+</kw>
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.175977" level="INFO">${payload} = {'email': 'test@example.com', 'password': 'password123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.175796" elapsed="0.000199"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.273019" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '56', 'Content-Type': 'application/json'} 
+ body=b'{"email": "test@example.com", "password": "password123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:03.273106" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '311', 'ETag': 'W/"137-vUL2+nrVpgXWKdgMm6OTjgouebQ"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"_id":"686186f9dd5b8bea4c8a7c0d","name":"Nome User Atualizado","email":"test@example.com","role":"user","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.ssZGU_fEjrOVz-I2oXe5LpLfqk2qZ61Qdqpe9qi8Mxo"}} 
+ </msg>
+<msg time="2025-07-04T13:21:03.273209" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.176057" elapsed="0.097171"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.273302" elapsed="0.000053"/>
+</return>
+<msg time="2025-07-04T13:21:03.273462" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${USER_EMAIL}</arg>
+<arg>${USER_PASSWORD}</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.175627" elapsed="0.097851"/>
+</kw>
+<kw name="Validate Login Success" owner="ApiKeywords">
+<kw name="Validate Response Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.274613" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.274274" elapsed="0.000381"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida o status code da resposta da API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.274123" elapsed="0.000576"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.275018" level="INFO">${json} = {'success': True, 'data': {'_id': '686186f9dd5b8bea4c8a7c0d', 'name': 'Nome User Atualizado', 'email': 'test@example.com', 'role': 'user', 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nj...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.274758" elapsed="0.000276"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${json['data']}</arg>
+<arg>token</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.275093" elapsed="0.000233"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-07-04T13:21:03.275613" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.ssZGU_fEjrOVz-I2oXe5LpLfqk2qZ61Qdqpe9qi8Mxo</msg>
+<var>${token}</var>
+<arg>${json['data']}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.275385" elapsed="0.000244"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.275782" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.ssZGU_fEjrOVz-I2oXe5LpLfqk2qZ61Qdqpe9qi8Mxo</msg>
+<arg>${TOKEN}</arg>
+<arg>${token}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.275692" elapsed="0.000110"/>
+</kw>
+<arg>${response}</arg>
+<doc>Valida se o login foi bem-sucedido</doc>
+<status status="PASS" start="2025-07-04T13:21:03.273851" elapsed="0.001985"/>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.276236" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.276194" elapsed="0.000097"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.276055" elapsed="0.000272"/>
+</kw>
+<status status="PASS" start="2025-07-04T13:21:03.174260" elapsed="0.102140"/>
+</test>
+<test id="s1-s1-s1-t2" name="Login com usuário inválido" line="13">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.277322" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.277209" elapsed="0.000260"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.277025" elapsed="0.000515"/>
+</kw>
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.278136" level="INFO">${payload} = {'email': 'usuarioinvalido@example.com', 'password': 'senhaerrada'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.277935" elapsed="0.000228"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.316317" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '67', 'Content-Type': 'application/json'} 
+ body=b'{"email": "usuarioinvalido@example.com", "password": "senhaerrada"}' 
+ </msg>
+<msg time="2025-07-04T13:21:03.316400" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '55', 'ETag': 'W/"37-5uDpJTljPBecOPs/j7OXFdPRcmQ"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":false,"message":"Invalid email or password"} 
+ </msg>
+<msg time="2025-07-04T13:21:03.316521" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.278431" elapsed="0.038116"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.316643" elapsed="0.000060"/>
+</return>
+<msg time="2025-07-04T13:21:03.316841" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>usuarioinvalido@example.com</arg>
+<arg>senhaerrada</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.277725" elapsed="0.039140"/>
+</kw>
+<kw name="Validate Login Failure" owner="ApiKeywords">
+<kw name="Validate Response Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.318304" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<msg time="2025-07-04T13:21:03.318384" level="FAIL">401 != 400</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="FAIL" start="2025-07-04T13:21:03.318033" elapsed="0.000511">401 != 400</status>
+</kw>
+<arg>${response}</arg>
+<arg>400</arg>
+<doc>Valida o status code da resposta da API</doc>
+<status status="FAIL" start="2025-07-04T13:21:03.317830" elapsed="0.000803">401 != 400</status>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2025-07-04T13:21:03.318704" elapsed="0.000015"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${json['message']}</arg>
+<arg>Invalid credentials</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="NOT RUN" start="2025-07-04T13:21:03.318772" elapsed="0.000012"/>
+</kw>
+<arg>${response}</arg>
+<doc>Valida se o login falhou</doc>
+<status status="FAIL" start="2025-07-04T13:21:03.317160" elapsed="0.001667">401 != 400</status>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.319237" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.319196" elapsed="0.000081"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.319068" elapsed="0.000241"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:03.276712" elapsed="0.042662">401 != 400</status>
+</test>
+<test id="s1-s1-s1-t3" name="Registro com e-mail já existente" line="17">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.320212" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.320092" elapsed="0.000247"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.319888" elapsed="0.000518"/>
+</kw>
+<kw name="Registrar Usuário API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.320831" level="INFO">${payload} = {'email': 'test@example.com', 'password': 'qualquerSenha'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.320699" elapsed="0.000147"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.358582" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/register 
+ path_url=/api/v1/auth/register 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '58', 'Content-Type': 'application/json'} 
+ body=b'{"email": "test@example.com", "password": "qualquerSenha"}' 
+ </msg>
+<msg time="2025-07-04T13:21:03.358660" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/register 
+ status=400, reason=Bad Request 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '49', 'ETag': 'W/"31-WKEMg8zALB1Ko0WjUHi/6RBGHVc"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":false,"message":"User already exists"} 
+ </msg>
+<msg time="2025-07-04T13:21:03.358766" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/register</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.320903" elapsed="0.037887"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.358874" elapsed="0.000044"/>
+</return>
+<msg time="2025-07-04T13:21:03.359039" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>${USER_EMAIL}</arg>
+<arg>qualquerSenha</arg>
+<doc>Registra um novo usuário via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.320561" elapsed="0.038499"/>
+</kw>
+<kw name="Validate Registration Failure" owner="ApiKeywords">
+<kw name="Validate Response Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.359971" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.359669" elapsed="0.000336"/>
+</kw>
+<arg>${response}</arg>
+<arg>${expected_status}</arg>
+<doc>Valida o status code da resposta da API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.359530" elapsed="0.000511"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.360337" level="INFO">${json} = {'success': False, 'message': 'User already exists'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.360097" elapsed="0.000255"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${json['message']}</arg>
+<arg>${expected_message}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.360409" elapsed="0.000231"/>
+</kw>
+<arg>${response}</arg>
+<arg>400</arg>
+<arg>User already exists</arg>
+<doc>Valida se o registro falhou</doc>
+<status status="PASS" start="2025-07-04T13:21:03.359335" elapsed="0.001426"/>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.361149" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.361110" elapsed="0.000080"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.360975" elapsed="0.000248"/>
+</kw>
+<status status="PASS" start="2025-07-04T13:21:03.319592" elapsed="0.041698"/>
+</test>
+<test id="s1-s1-s1-t4" name="Registro com formato inválido de e-mail" line="21">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.362138" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.362075" elapsed="0.000142"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.361969" elapsed="0.000284"/>
+</kw>
+<kw name="Registrar Usuário API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.362627" level="INFO">${payload} = {'email': 'emailinvalido', 'password': '123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.362499" elapsed="0.000143"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.402153" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/register 
+ path_url=/api/v1/auth/register 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '45', 'Content-Type': 'application/json'} 
+ body=b'{"email": "emailinvalido", "password": "123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:03.402218" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/register 
+ status=400, reason=Bad Request 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '180', 'ETag': 'W/"b4-qdjdGB9JDvx9Ra7KbY/m7FzVOTo"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":false,"message":"Validation failed","errors":{"name":"Name is required","email":"Please provide a valid email","password":"Password must be at least 6 characters long"}} 
+ </msg>
+<msg time="2025-07-04T13:21:03.402329" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/register</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.362699" elapsed="0.039646"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.402418" elapsed="0.000038"/>
+</return>
+<msg time="2025-07-04T13:21:03.402542" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>emailinvalido</arg>
+<arg>123</arg>
+<doc>Registra um novo usuário via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.362370" elapsed="0.040186"/>
+</kw>
+<kw name="Validate Registration Failure" owner="ApiKeywords">
+<kw name="Validate Response Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.403423" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.403136" elapsed="0.000321"/>
+</kw>
+<arg>${response}</arg>
+<arg>${expected_status}</arg>
+<doc>Valida o status code da resposta da API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.402988" elapsed="0.000507"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.403796" level="INFO">${json} = {'success': False, 'message': 'Validation failed', 'errors': {'name': 'Name is required', 'email': 'Please provide a valid email', 'password': 'Password must be at least 6 characters long'}}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.403552" elapsed="0.000260"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${json['message']}</arg>
+<arg>${expected_message}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.403868" elapsed="0.000233"/>
+</kw>
+<arg>${response}</arg>
+<arg>400</arg>
+<arg>Validation failed</arg>
+<doc>Valida se o registro falhou</doc>
+<status status="PASS" start="2025-07-04T13:21:03.402798" elapsed="0.001340"/>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.404443" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.404406" elapsed="0.000072"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.404299" elapsed="0.000208"/>
+</kw>
+<status status="PASS" start="2025-07-04T13:21:03.361780" elapsed="0.042784"/>
+</test>
+<doc>Testes de autenticação e autorização (login, register, me)</doc>
+<status status="FAIL" start="2025-07-04T13:21:02.811240" elapsed="0.593658"/>
+</suite>
+<status status="FAIL" start="2025-07-04T13:21:02.810626" elapsed="0.594673"/>
+</suite>
+<suite id="s1-s2" name="Movies" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api\movies">
+<suite id="s1-s2-s1" name="Movies" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api\movies\movies.robot">
+<test id="s1-s2-s1-t1" name="Listar todos os filmes" line="9">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.409983" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.409914" elapsed="0.000158"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.409793" elapsed="0.000320"/>
+</kw>
+<kw name="Listar Filmes API" owner="ApiKeywords">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.489208" level="INFO">GET Request : url=http://localhost:3000/api/v1/movies 
+ path_url=/api/v1/movies 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-07-04T13:21:03.489307" level="INFO">GET Response : url=http://localhost:3000/api/v1/movies 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '3108', 'ETag': 'W/"c24-+n4zeDs7yxCOoo24FGm18Mt3PCU"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"count":10,"pagination":{"next":{"page":2,"limit":10}},"data":[{"_id":"6861a930dd5b8bea4c8a7c6f","title":"Filme Teste","synopsis":"Sinopse do filme de teste.","director":"Diretor Teste","genres":["Comédia","Ação"],"duration":120,"classification":"L","poster":"poster_teste.jpg","releaseDate":"2025-01-01T00:00:00.000Z","id":"6861a930dd5b8bea4c8a7c6f"},{"_id":"6867f5cb51a4b744ef394b77","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867f5cb51a4b744ef394b77"},{"_id":"6867f35a51a4b744ef394b4a","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867f35a51a4b744ef394b4a"},{"_id":"6867f3f951a4b744ef394b61","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867f3f951a4b744ef394b61"},{"_id":"6867eec351a4b744ef394b33","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867eec351a4b744ef394b33"},{"_id":"6867ec5951a4b744ef394b06","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867ec5951a4b744ef394b06"},{"_id":"6867ff5551a4b744ef394b9b","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867ff5551a4b744ef394b9b"},{"_id":"6867f6af51a4b744ef394b88","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867f6af51a4b744ef394b88"},{"_id":"6867321cf703e3ef231fe910","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867321cf703e3ef231fe910"},{"_id":"6867ee3e51a4b744ef394b1d","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867ee3e51a4b744ef394b1d"}]} 
+ </msg>
+<msg time="2025-07-04T13:21:03.489518" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/movies</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.410333" elapsed="0.079215"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.489640" elapsed="0.000053"/>
+</return>
+<msg time="2025-07-04T13:21:03.489833" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<doc>Lista todos os filmes via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.410230" elapsed="0.079628"/>
+</kw>
+<kw name="Validate Movies List" owner="ApiKeywords">
+<kw name="Validate Response Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.490727" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.490422" elapsed="0.000340"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida o status code da resposta da API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.490286" elapsed="0.000515"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.491144" level="INFO">${json} = {'success': True, 'count': 10, 'pagination': {'next': {'page': 2, 'limit': 10}}, 'data': [{'_id': '6861a930dd5b8bea4c8a7c6f', 'title': 'Filme Teste', 'synopsis': 'Sinopse do filme de teste.', 'directo...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.490858" elapsed="0.000303"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.491276" level="INFO">Length is 4.</msg>
+<arg>${json}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.491219" elapsed="0.000080"/>
+</kw>
+<arg>${response}</arg>
+<doc>Valida se a lista de filmes foi retornada</doc>
+<status status="PASS" start="2025-07-04T13:21:03.490119" elapsed="0.001210"/>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.492123" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.491591" elapsed="0.000567"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.491481" elapsed="0.000710"/>
+</kw>
+<status status="PASS" start="2025-07-04T13:21:03.409594" elapsed="0.082663"/>
+</test>
+<test id="s1-s2-s1-t2" name="Filtrar filmes por título" line="13">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.492787" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.492726" elapsed="0.000137"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.492626" elapsed="0.000272"/>
+</kw>
+<kw name="Filtrar Filmes por Título API" owner="ApiKeywords">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.567570" level="INFO">GET Request : url=http://localhost:3000/api/v1/movies?title=Filme%20Teste 
+ path_url=/api/v1/movies?title=Filme%20Teste 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-07-04T13:21:03.567669" level="INFO">GET Response : url=http://localhost:3000/api/v1/movies?title=Filme%20Teste 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '3108', 'ETag': 'W/"c24-+n4zeDs7yxCOoo24FGm18Mt3PCU"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"count":10,"pagination":{"next":{"page":2,"limit":10}},"data":[{"_id":"6861a930dd5b8bea4c8a7c6f","title":"Filme Teste","synopsis":"Sinopse do filme de teste.","director":"Diretor Teste","genres":["Comédia","Ação"],"duration":120,"classification":"L","poster":"poster_teste.jpg","releaseDate":"2025-01-01T00:00:00.000Z","id":"6861a930dd5b8bea4c8a7c6f"},{"_id":"6867f5cb51a4b744ef394b77","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867f5cb51a4b744ef394b77"},{"_id":"6867f35a51a4b744ef394b4a","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867f35a51a4b744ef394b4a"},{"_id":"6867f3f951a4b744ef394b61","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867f3f951a4b744ef394b61"},{"_id":"6867eec351a4b744ef394b33","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867eec351a4b744ef394b33"},{"_id":"6867ec5951a4b744ef394b06","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867ec5951a4b744ef394b06"},{"_id":"6867ff5551a4b744ef394b9b","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867ff5551a4b744ef394b9b"},{"_id":"6867f6af51a4b744ef394b88","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867f6af51a4b744ef394b88"},{"_id":"6867321cf703e3ef231fe910","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867321cf703e3ef231fe910"},{"_id":"6867ee3e51a4b744ef394b1d","title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","id":"6867ee3e51a4b744ef394b1d"}]} 
+ </msg>
+<msg time="2025-07-04T13:21:03.567824" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/movies</arg>
+<arg>params=title=${titulo}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.493125" elapsed="0.074728"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.567947" elapsed="0.000053"/>
+</return>
+<msg time="2025-07-04T13:21:03.568103" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>Filme Teste</arg>
+<doc>Filtra filmes por título via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.493015" elapsed="0.075183"/>
+</kw>
+<kw name="Validate Movies List" owner="ApiKeywords">
+<kw name="Validate Response Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.569023" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.568736" elapsed="0.000327"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida o status code da resposta da API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.568604" elapsed="0.000499"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.569442" level="INFO">${json} = {'success': True, 'count': 10, 'pagination': {'next': {'page': 2, 'limit': 10}}, 'data': [{'_id': '6861a930dd5b8bea4c8a7c6f', 'title': 'Filme Teste', 'synopsis': 'Sinopse do filme de teste.', 'directo...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.569159" elapsed="0.000300"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.569573" level="INFO">Length is 4.</msg>
+<arg>${json}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.569517" elapsed="0.000076"/>
+</kw>
+<arg>${response}</arg>
+<doc>Valida se a lista de filmes foi retornada</doc>
+<status status="PASS" start="2025-07-04T13:21:03.568415" elapsed="0.001209"/>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.569926" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.569890" elapsed="0.000072"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.569781" elapsed="0.000213"/>
+</kw>
+<status status="PASS" start="2025-07-04T13:21:03.492448" elapsed="0.077597"/>
+</test>
+<test id="s1-s2-s1-t3" name="Filtrar filmes por gênero" line="17">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.570556" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.570494" elapsed="0.000143"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.570395" elapsed="0.000277"/>
+</kw>
+<kw name="Filtrar Filmes por Gênero API" owner="ApiKeywords">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.646145" level="INFO">GET Request : url=http://localhost:3000/api/v1/movies?genre=A%C3%A7%C3%A3o 
+ path_url=/api/v1/movies?genre=A%C3%A7%C3%A3o 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-07-04T13:21:03.646244" level="INFO">GET Response : url=http://localhost:3000/api/v1/movies?genre=A%C3%A7%C3%A3o 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '343', 'ETag': 'W/"157-gm/ciQ34vFZHRhPHsn0g2xT1FD0"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"count":1,"pagination":{},"data":[{"_id":"6861a930dd5b8bea4c8a7c6f","title":"Filme Teste","synopsis":"Sinopse do filme de teste.","director":"Diretor Teste","genres":["Comédia","Ação"],"duration":120,"classification":"L","poster":"poster_teste.jpg","releaseDate":"2025-01-01T00:00:00.000Z","id":"6861a930dd5b8bea4c8a7c6f"}]} 
+ </msg>
+<msg time="2025-07-04T13:21:03.646376" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/movies</arg>
+<arg>params=genre=${genero}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.570897" elapsed="0.075506"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.646494" elapsed="0.000050"/>
+</return>
+<msg time="2025-07-04T13:21:03.646678" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>Ação</arg>
+<doc>Filtra filmes por gênero via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.570784" elapsed="0.075918"/>
+</kw>
+<kw name="Validate Movies List" owner="ApiKeywords">
+<kw name="Validate Response Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.647613" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.647362" elapsed="0.000283"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida o status code da resposta da API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.647229" elapsed="0.000451"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.647972" level="INFO">${json} = {'success': True, 'count': 1, 'pagination': {}, 'data': [{'_id': '6861a930dd5b8bea4c8a7c6f', 'title': 'Filme Teste', 'synopsis': 'Sinopse do filme de teste.', 'director': 'Diretor Teste', 'genres': ['...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.647735" elapsed="0.000252"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.648101" level="INFO">Length is 4.</msg>
+<arg>${json}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.648043" elapsed="0.000079"/>
+</kw>
+<arg>${response}</arg>
+<doc>Valida se a lista de filmes foi retornada</doc>
+<status status="PASS" start="2025-07-04T13:21:03.646992" elapsed="0.001162"/>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.648576" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.648541" elapsed="0.000075"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.648433" elapsed="0.000213"/>
+</kw>
+<status status="PASS" start="2025-07-04T13:21:03.570222" elapsed="0.078477"/>
+</test>
+<test id="s1-s2-s1-t4" name="Criar filme com usuário admin" line="21">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.649224" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.649160" elapsed="0.000139"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.649061" elapsed="0.000272"/>
+</kw>
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.649764" level="INFO">${payload} = {'email': 'admin@example.com', 'password': 'admin123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.649635" elapsed="0.000143"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.742150" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '54', 'Content-Type': 'application/json'} 
+ body=b'{"email": "admin@example.com", "password": "admin123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:03.742240" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '303', 'ETag': 'W/"12f-pSVN7sC3yjf8LyT8wYlZH0s++50"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"_id":"686186f9dd5b8bea4c8a7c10","name":"Admin User","email":"admin@example.com","role":"admin","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MxMCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.PWixKpTJ0Dc-qI1PDRgy4QcoDP0mQmzmLOXCLImwODw"}} 
+ </msg>
+<msg time="2025-07-04T13:21:03.742368" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.649834" elapsed="0.092562"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.742490" elapsed="0.000049"/>
+</return>
+<msg time="2025-07-04T13:21:03.742673" level="INFO">${login} = &lt;Response [200]&gt;</msg>
+<var>${login}</var>
+<arg>${ADMIN_EMAIL}</arg>
+<arg>${ADMIN_PASSWORD}</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.649492" elapsed="0.093205"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.743383" level="INFO">${json} = {'success': True, 'data': {'_id': '686186f9dd5b8bea4c8a7c10', 'name': 'Admin User', 'email': 'admin@example.com', 'role': 'admin', 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZG...</msg>
+<var>${json}</var>
+<arg>${login.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.742937" elapsed="0.000465"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-07-04T13:21:03.743755" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MxMCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.PWixKpTJ0Dc-qI1PDRgy4QcoDP0mQmzmLOXCLImwODw</msg>
+<var>${token}</var>
+<arg>${json['data']}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.743503" elapsed="0.000268"/>
+</kw>
+<kw name="Criar Filme API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.744335" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MxMCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.PWixKpTJ0Dc-qI1PDRgy4QcoDP0mQmzmLOXCLImwODw'}</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.744222" elapsed="0.000128"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.744634" level="INFO">${payload} = {'title': 'Filme Teste', 'synopsis': 'Sinopse do filme de teste', 'director': 'Diretor Teste', 'genres': '["Ação"]', 'duration': 120, 'classification': 'Livre', 'releaseDate': '2024-06-01', 'poster': ...</msg>
+<var>${payload}</var>
+<arg>title=${titulo}</arg>
+<arg>synopsis=${sinopse}</arg>
+<arg>director=${diretor}</arg>
+<arg>genres=${generos}</arg>
+<arg>duration=${duracao}</arg>
+<arg>classification=${classificacao}</arg>
+<arg>releaseDate=${data_lancamento}</arg>
+<arg>poster=${poster}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.744407" elapsed="0.000243"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.822532" level="INFO">POST Request : url=http://localhost:3000/api/v1/movies 
+ path_url=/api/v1/movies 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MxMCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.PWixKpTJ0Dc-qI1PDRgy4QcoDP0mQmzmLOXCLImwODw', 'Content-Length': '245', 'Content-Type': 'application/json'} 
+ body=b'{"title": "Filme Teste", "synopsis": "Sinopse do filme de teste", "director": "Diretor Teste", "genres": "[\\"A\\u00e7\\u00e3o\\"]", "duration": 120, "classification": "Livre", "releaseDate": "2024-06-01", "poster": "https://exemplo.com/poster.jpg"}' 
+ </msg>
+<msg time="2025-07-04T13:21:03.822630" level="INFO">POST Response : url=http://localhost:3000/api/v1/movies 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '413', 'ETag': 'W/"19d-H2/QH4TZsPr0tuczU/TqsnTEjGg"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"title":"Filme Teste","synopsis":"Sinopse do filme de teste","director":"Diretor Teste","genres":["[\"Ação\"]"],"duration":120,"classification":"Livre","poster":"https://exemplo.com/poster.jpg","releaseDate":"2024-06-01T00:00:00.000Z","_id":"6867ff6f51a4b744ef394bad","createdAt":"2025-07-04T16:21:03.781Z","updatedAt":"2025-07-04T16:21:03.781Z","__v":0,"id":"6867ff6f51a4b744ef394bad"}} 
+ </msg>
+<msg time="2025-07-04T13:21:03.822758" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/movies</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.744712" elapsed="0.078073"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.822875" elapsed="0.000047"/>
+</return>
+<msg time="2025-07-04T13:21:03.823054" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${token}</arg>
+<arg>Filme Teste</arg>
+<arg>Sinopse do filme de teste</arg>
+<arg>Diretor Teste</arg>
+<arg>["Ação"]</arg>
+<arg>${120}</arg>
+<arg>Livre</arg>
+<arg>2024-06-01</arg>
+<arg>https://exemplo.com/poster.jpg</arg>
+<doc>Cria um novo filme via API (requer token de admin)</doc>
+<status status="PASS" start="2025-07-04T13:21:03.743911" elapsed="0.079171"/>
+</kw>
+<kw name="Validate Movie Creation Success" owner="ApiKeywords">
+<kw name="Validate Response Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.824023" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.823762" elapsed="0.000293"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida o status code da resposta da API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.823632" elapsed="0.000459"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.824487" level="INFO">${json} = {'success': True, 'data': {'title': 'Filme Teste', 'synopsis': 'Sinopse do filme de teste', 'director': 'Diretor Teste', 'genres': ['["Ação"]'], 'duration': 120, 'classification': 'Livre', 'poster': '...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.824239" elapsed="0.000265"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${json['data']}</arg>
+<arg>id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.824564" elapsed="0.000230"/>
+</kw>
+<arg>${response}</arg>
+<doc>Valida se a criação do filme foi bem-sucedida</doc>
+<status status="PASS" start="2025-07-04T13:21:03.823403" elapsed="0.001431"/>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.825135" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.825101" elapsed="0.000069"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.824993" elapsed="0.000206"/>
+</kw>
+<status status="PASS" start="2025-07-04T13:21:03.648886" elapsed="0.176372"/>
+</test>
+<test id="s1-s2-s1-t5" name="Criar filme com usuário regular (sem permissão)" line="28">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.825798" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.825738" elapsed="0.000137"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.825638" elapsed="0.000271"/>
+</kw>
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.826296" level="INFO">${payload} = {'email': 'test@example.com', 'password': 'password123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.826172" elapsed="0.000138"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.919159" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '56', 'Content-Type': 'application/json'} 
+ body=b'{"email": "test@example.com", "password": "password123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:03.919249" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '311', 'ETag': 'W/"137-vUL2+nrVpgXWKdgMm6OTjgouebQ"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"_id":"686186f9dd5b8bea4c8a7c0d","name":"Nome User Atualizado","email":"test@example.com","role":"user","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.ssZGU_fEjrOVz-I2oXe5LpLfqk2qZ61Qdqpe9qi8Mxo"}} 
+ </msg>
+<msg time="2025-07-04T13:21:03.919371" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.826364" elapsed="0.093034"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:03.919489" elapsed="0.000049"/>
+</return>
+<msg time="2025-07-04T13:21:03.919645" level="INFO">${login} = &lt;Response [200]&gt;</msg>
+<var>${login}</var>
+<arg>${USER_EMAIL}</arg>
+<arg>${USER_PASSWORD}</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.826023" elapsed="0.093636"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.920192" level="INFO">${json} = {'success': True, 'data': {'_id': '686186f9dd5b8bea4c8a7c0d', 'name': 'Nome User Atualizado', 'email': 'test@example.com', 'role': 'user', 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nj...</msg>
+<var>${json}</var>
+<arg>${login.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.919839" elapsed="0.000371"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-07-04T13:21:03.920564" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.ssZGU_fEjrOVz-I2oXe5LpLfqk2qZ61Qdqpe9qi8Mxo</msg>
+<var>${token}</var>
+<arg>${json['data']}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.920309" elapsed="0.000271"/>
+</kw>
+<kw name="Criar Filme API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.921165" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.ssZGU_fEjrOVz-I2oXe5LpLfqk2qZ61Qdqpe9qi8Mxo'}</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.921052" elapsed="0.000128"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.921430" level="INFO">${payload} = {'title': 'Filme Teste 2', 'synopsis': 'Sinopse 2', 'director': 'Diretor 2', 'genres': '["Drama"]', 'duration': 100, 'classification': '12 anos', 'releaseDate': '2024-07-01', 'poster': 'https://exempl...</msg>
+<var>${payload}</var>
+<arg>title=${titulo}</arg>
+<arg>synopsis=${sinopse}</arg>
+<arg>director=${diretor}</arg>
+<arg>genres=${generos}</arg>
+<arg>duration=${duracao}</arg>
+<arg>classification=${classificacao}</arg>
+<arg>releaseDate=${data_lancamento}</arg>
+<arg>poster=${poster}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.921238" elapsed="0.000206"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.958857" level="INFO">POST Request : url=http://localhost:3000/api/v1/movies 
+ path_url=/api/v1/movies 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2MywiZXhwIjoxNzUxNzMyNDYzfQ.ssZGU_fEjrOVz-I2oXe5LpLfqk2qZ61Qdqpe9qi8Mxo', 'Content-Length': '221', 'Content-Type': 'application/json'} 
+ body=b'{"title": "Filme Teste 2", "synopsis": "Sinopse 2", "director": "Diretor 2", "genres": "[\\"Drama\\"]", "duration": 100, "classification": "12 anos", "releaseDate": "2024-07-01", "poster": "https://exemplo.com/poster2.jpg"}' 
+ </msg>
+<msg time="2025-07-04T13:21:03.958926" level="INFO">POST Response : url=http://localhost:3000/api/v1/movies 
+ status=403, reason=Forbidden 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '83', 'ETag': 'W/"53-HQ7D0c09eB4A2u3nNjjh5szO0JM"', 'Date': 'Fri, 04 Jul 2025 16:21:03 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":false,"message":"User role user is not authorized to access this route"} 
+ </msg>
+<msg time="2025-07-04T13:21:03.959089" level="FAIL">HTTPError: 403 Client Error: Forbidden for url: http://localhost:3000/api/v1/movies</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/movies</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2025-07-04T13:21:03.921504" elapsed="0.039344">HTTPError: 403 Client Error: Forbidden for url: http://localhost:3000/api/v1/movies</status>
+</kw>
+<return>
+<value>${response}</value>
+<status status="NOT RUN" start="2025-07-04T13:21:03.960919" elapsed="0.000020"/>
+</return>
+<var>${response}</var>
+<arg>${token}</arg>
+<arg>Filme Teste 2</arg>
+<arg>Sinopse 2</arg>
+<arg>Diretor 2</arg>
+<arg>["Drama"]</arg>
+<arg>${100}</arg>
+<arg>12 anos</arg>
+<arg>2024-07-01</arg>
+<arg>https://exemplo.com/poster2.jpg</arg>
+<doc>Cria um novo filme via API (requer token de admin)</doc>
+<status status="FAIL" start="2025-07-04T13:21:03.920721" elapsed="0.040283">HTTPError: 403 Client Error: Forbidden for url: http://localhost:3000/api/v1/movies</status>
+</kw>
+<kw name="Validate Movie Creation Failure" owner="ApiKeywords">
+<arg>${response}</arg>
+<doc>Valida se a criação do filme falhou (sem permissão)</doc>
+<status status="NOT RUN" start="2025-07-04T13:21:03.961233" elapsed="0.000022"/>
+</kw>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.961612" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:03.961569" elapsed="0.000079"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:03.961429" elapsed="0.000249"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:03.825448" elapsed="0.136448">HTTPError: 403 Client Error: Forbidden for url: http://localhost:3000/api/v1/movies</status>
+</test>
+<doc>Testes de gestão de filmes (GET, POST, PUT, DELETE)</doc>
+<status status="FAIL" start="2025-07-04T13:21:03.406292" elapsed="0.555887"/>
+</suite>
+<status status="FAIL" start="2025-07-04T13:21:03.405519" elapsed="0.557008"/>
+</suite>
+<suite id="s1-s3" name="Reservations" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api\reservations">
+<suite id="s1-s3-s1" name="Reservations" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api\reservations\reservations.robot">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:03.966817" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:03.966748" elapsed="0.000147"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.966654" elapsed="0.000279"/>
+</kw>
+<test id="s1-s3-s1-t1" name="Criar reserva com usuário logado" line="9">
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:03.967997" level="INFO">${payload} = {'email': 'test@example.com', 'password': 'password123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.967709" elapsed="0.000320"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.061708" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '56', 'Content-Type': 'application/json'} 
+ body=b'{"email": "test@example.com", "password": "password123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:04.061800" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '311', 'ETag': 'W/"137-zFWK7ZOr6w3gGZ9HgkO+3RGUX2E"', 'Date': 'Fri, 04 Jul 2025 16:21:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"_id":"686186f9dd5b8bea4c8a7c0d","name":"Nome User Atualizado","email":"test@example.com","role":"user","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2NCwiZXhwIjoxNzUxNzMyNDY0fQ.Ioe1dYPknj8VESyFpF2V_ifRiPRtHVD4MqYx4IpxXaQ"}} 
+ </msg>
+<msg time="2025-07-04T13:21:04.061924" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:03.968140" elapsed="0.093813"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:04.062045" elapsed="0.000051"/>
+</return>
+<msg time="2025-07-04T13:21:04.062234" level="INFO">${token} = &lt;Response [200]&gt;</msg>
+<var>${token}</var>
+<arg>${USER_EMAIL}</arg>
+<arg>${USER_PASSWORD}</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:03.967321" elapsed="0.094938"/>
+</kw>
+<kw name="Criar Reserva API" owner="ApiKeywords">
+<msg time="2025-07-04T13:21:04.062946" level="FAIL">Variable '${id_sessao}' not found.</msg>
+<var>${response}</var>
+<arg>${token}</arg>
+<arg>${id_sessao}</arg>
+<arg>2</arg>
+<doc>Cria uma nova reserva via API</doc>
+<status status="FAIL" start="2025-07-04T13:21:04.062550" elapsed="0.000421">Variable '${id_sessao}' not found.</status>
+</kw>
+<kw name="Validate Reservation Success">
+<arg>${response}</arg>
+<status status="NOT RUN" start="2025-07-04T13:21:04.063183" elapsed="0.000021"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:03.966967" elapsed="0.096573">Variable '${id_sessao}' not found.</status>
+</test>
+<test id="s1-s3-s1-t2" name="Criar reserva com sessão inexistente" line="17">
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:04.064312" level="INFO">${payload} = {'email': 'test@example.com', 'password': 'password123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.064179" elapsed="0.000149"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.156329" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '56', 'Content-Type': 'application/json'} 
+ body=b'{"email": "test@example.com", "password": "password123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:04.156419" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '311', 'ETag': 'W/"137-zFWK7ZOr6w3gGZ9HgkO+3RGUX2E"', 'Date': 'Fri, 04 Jul 2025 16:21:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"_id":"686186f9dd5b8bea4c8a7c0d","name":"Nome User Atualizado","email":"test@example.com","role":"user","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2NCwiZXhwIjoxNzUxNzMyNDY0fQ.Ioe1dYPknj8VESyFpF2V_ifRiPRtHVD4MqYx4IpxXaQ"}} 
+ </msg>
+<msg time="2025-07-04T13:21:04.156602" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.064386" elapsed="0.092245"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:04.156723" elapsed="0.000050"/>
+</return>
+<msg time="2025-07-04T13:21:04.156914" level="INFO">${token} = &lt;Response [200]&gt;</msg>
+<var>${token}</var>
+<arg>${USER_EMAIL}</arg>
+<arg>${USER_PASSWORD}</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:04.064013" elapsed="0.092926"/>
+</kw>
+<kw name="Run Keyword And Expect Error" owner="BuiltIn">
+<kw name="Criar Reserva API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:04.157649" level="INFO">${headers} = {'Authorization': 'Bearer &lt;Response [200]&gt;'}</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.157532" elapsed="0.000134"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:04.157836" level="INFO">${payload} = {'session_id': 'id_invalido', 'seat': '1'}</msg>
+<var>${payload}</var>
+<arg>session_id=${session_id}</arg>
+<arg>seat=${seat}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.157728" elapsed="0.000121"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.172801" level="INFO">POST Request : url=http://localhost:3000/api/v1/reservations 
+ path_url=/api/v1/reservations 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer &lt;Response [200]&gt;', 'Content-Length': '42', 'Content-Type': 'application/json'} 
+ body=b'{"session_id": "id_invalido", "seat": "1"}' 
+ </msg>
+<msg time="2025-07-04T13:21:04.172888" level="INFO">POST Response : url=http://localhost:3000/api/v1/reservations 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '65', 'ETag': 'W/"41-TJq3LYiwj1On+7IZ17oLU5tM1Zs"', 'Date': 'Fri, 04 Jul 2025 16:21:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":false,"message":"Not authorized to access this route"} 
+ </msg>
+<msg time="2025-07-04T13:21:04.173026" level="FAIL">HTTPError: 401 Client Error: Unauthorized for url: http://localhost:3000/api/v1/reservations</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/reservations</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2025-07-04T13:21:04.157906" elapsed="0.015958">HTTPError: 401 Client Error: Unauthorized for url: http://localhost:3000/api/v1/reservations</status>
+</kw>
+<return>
+<value>${response}</value>
+<status status="NOT RUN" start="2025-07-04T13:21:04.173979" elapsed="0.000038"/>
+</return>
+<arg>${token}</arg>
+<arg>id_invalido</arg>
+<arg>1</arg>
+<doc>Cria uma nova reserva via API</doc>
+<status status="FAIL" start="2025-07-04T13:21:04.157352" elapsed="0.016770">HTTPError: 401 Client Error: Unauthorized for url: http://localhost:3000/api/v1/reservations</status>
+</kw>
+<msg time="2025-07-04T13:21:04.174362" level="FAIL">Expected error '*404 Client Error*' but got 'HTTPError: 401 Client Error: Unauthorized for url: http://localhost:3000/api/v1/reservations'.</msg>
+<arg>*404 Client Error*</arg>
+<arg>Criar Reserva API</arg>
+<arg>${token}</arg>
+<arg>id_invalido</arg>
+<arg>1</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<status status="FAIL" start="2025-07-04T13:21:04.157194" elapsed="0.017213">Expected error '*404 Client Error*' but got 'HTTPError: 401 Client Error: Unauthorized for url: http://localhost:3000/api/v1/reservations'.</status>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:04.063793" elapsed="0.110853">Expected error '*404 Client Error*' but got 'HTTPError: 401 Client Error: Unauthorized for url: http://localhost:3000/api/v1/reservations'.</status>
+</test>
+<test id="s1-s3-s1-t3" name="Listar reservas do usuário" line="25">
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:04.175898" level="INFO">${payload} = {'email': 'test@example.com', 'password': 'password123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.175745" elapsed="0.000168"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.268146" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '56', 'Content-Type': 'application/json'} 
+ body=b'{"email": "test@example.com", "password": "password123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:04.268241" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '311', 'ETag': 'W/"137-zFWK7ZOr6w3gGZ9HgkO+3RGUX2E"', 'Date': 'Fri, 04 Jul 2025 16:21:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"_id":"686186f9dd5b8bea4c8a7c0d","name":"Nome User Atualizado","email":"test@example.com","role":"user","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2NCwiZXhwIjoxNzUxNzMyNDY0fQ.Ioe1dYPknj8VESyFpF2V_ifRiPRtHVD4MqYx4IpxXaQ"}} 
+ </msg>
+<msg time="2025-07-04T13:21:04.268367" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.175977" elapsed="0.092418"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:04.268487" elapsed="0.000056"/>
+</return>
+<msg time="2025-07-04T13:21:04.268701" level="INFO">${token} = &lt;Response [200]&gt;</msg>
+<var>${token}</var>
+<arg>${USER_EMAIL}</arg>
+<arg>${USER_PASSWORD}</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:04.175528" elapsed="0.093199"/>
+</kw>
+<kw name="Listar Reservas do Usuario API">
+<msg time="2025-07-04T13:21:04.271284" level="FAIL">No keyword with name 'Listar Reservas do Usuario API' found.</msg>
+<var>${response}</var>
+<arg>${token}</arg>
+<status status="FAIL" start="2025-07-04T13:21:04.271242" elapsed="0.000074">No keyword with name 'Listar Reservas do Usuario API' found.</status>
+</kw>
+<kw name="Validate User Reservations Success">
+<arg>${response}</arg>
+<status status="NOT RUN" start="2025-07-04T13:21:04.271469" elapsed="0.000017"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:04.175033" elapsed="0.096570">No keyword with name 'Listar Reservas do Usuario API' found.</status>
+</test>
+<test id="s1-s3-s1-t4" name="Cancelar reserva existente" line="30">
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:04.272331" level="INFO">${payload} = {'email': 'test@example.com', 'password': 'password123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.272192" elapsed="0.000154"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.364524" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '56', 'Content-Type': 'application/json'} 
+ body=b'{"email": "test@example.com", "password": "password123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:04.364615" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '311', 'ETag': 'W/"137-zFWK7ZOr6w3gGZ9HgkO+3RGUX2E"', 'Date': 'Fri, 04 Jul 2025 16:21:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"_id":"686186f9dd5b8bea4c8a7c0d","name":"Nome User Atualizado","email":"test@example.com","role":"user","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MwZCIsImlhdCI6MTc1MTY0NjA2NCwiZXhwIjoxNzUxNzMyNDY0fQ.Ioe1dYPknj8VESyFpF2V_ifRiPRtHVD4MqYx4IpxXaQ"}} 
+ </msg>
+<msg time="2025-07-04T13:21:04.364745" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.272451" elapsed="0.092323"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:04.364868" elapsed="0.000036"/>
+</return>
+<msg time="2025-07-04T13:21:04.364995" level="INFO">${token} = &lt;Response [200]&gt;</msg>
+<var>${token}</var>
+<arg>${USER_EMAIL}</arg>
+<arg>${USER_PASSWORD}</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:04.272017" elapsed="0.092992"/>
+</kw>
+<kw name="Criar e Obter ID da Reserva">
+<msg time="2025-07-04T13:21:04.366617" level="FAIL">No keyword with name 'Criar e Obter ID da Reserva' found.</msg>
+<var>${id_reserva}</var>
+<arg>${token}</arg>
+<arg>${id_sessao}</arg>
+<arg>1</arg>
+<status status="FAIL" start="2025-07-04T13:21:04.366588" elapsed="0.000055">No keyword with name 'Criar e Obter ID da Reserva' found.</status>
+</kw>
+<kw name="Cancelar Reserva API">
+<var>${response}</var>
+<arg>${token}</arg>
+<arg>${id_reserva}</arg>
+<status status="NOT RUN" start="2025-07-04T13:21:04.366771" elapsed="0.000014"/>
+</kw>
+<kw name="Validate Cancel Reservation Success">
+<arg>${response}</arg>
+<status status="NOT RUN" start="2025-07-04T13:21:04.366871" elapsed="0.000013"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:04.271798" elapsed="0.095195">No keyword with name 'Criar e Obter ID da Reserva' found.</status>
+</test>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.367454" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:04.367415" elapsed="0.000077"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:04.367308" elapsed="0.000215"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:03.963467" elapsed="0.404076"/>
+</suite>
+<status status="FAIL" start="2025-07-04T13:21:03.962744" elapsed="0.405257"/>
+</suite>
+<suite id="s1-s4" name="Sessions" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api\sessions">
+<suite id="s1-s4-s1" name="Sessions" source="C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\tests\api\sessions\sessions.robot">
+<kw name="Start API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.372463" level="INFO">Creating Session using : alias=cinema, url=http://localhost:3000/api/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema</arg>
+<arg>${API_BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-07-04T13:21:04.372390" elapsed="0.000157"/>
+</kw>
+<doc>Inicia uma nova sessão HTTP para testes de API</doc>
+<status status="PASS" start="2025-07-04T13:21:04.372291" elapsed="0.000297"/>
+</kw>
+<test id="s1-s4-s1-t1" name="Listar sessões de um filme" line="9">
+<kw name="Listar Sessoes De Um Filme API">
+<msg time="2025-07-04T13:21:04.374037" level="FAIL">No keyword with name 'Listar Sessoes De Um Filme API' found.</msg>
+<var>${response}</var>
+<arg>${id_do_filme}</arg>
+<status status="FAIL" start="2025-07-04T13:21:04.374015" elapsed="0.000043">No keyword with name 'Listar Sessoes De Um Filme API' found.</status>
+</kw>
+<kw name="Validate Session List Success">
+<arg>${response}</arg>
+<status status="NOT RUN" start="2025-07-04T13:21:04.374162" elapsed="0.000014"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:04.372619" elapsed="0.001654">No keyword with name 'Listar Sessoes De Um Filme API' found.</status>
+</test>
+<test id="s1-s4-s1-t2" name="Criar nova sessão (admin)" line="13">
+<kw name="Login API" owner="ApiKeywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-07-04T13:21:04.374915" level="INFO">${payload} = {'email': 'admin@example.com', 'password': 'admin123'}</msg>
+<var>${payload}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.374782" elapsed="0.000148"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.467765" level="INFO">POST Request : url=http://localhost:3000/api/v1/auth/login 
+ path_url=/api/v1/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '54', 'Content-Type': 'application/json'} 
+ body=b'{"email": "admin@example.com", "password": "admin123"}' 
+ </msg>
+<msg time="2025-07-04T13:21:04.467856" level="INFO">POST Response : url=http://localhost:3000/api/v1/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '303', 'ETag': 'W/"12f-3F3xtuOvTyZwxtRPg5iWq4SQ1vE"', 'Date': 'Fri, 04 Jul 2025 16:21:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":{"_id":"686186f9dd5b8bea4c8a7c10","name":"Admin User","email":"admin@example.com","role":"admin","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjE4NmY5ZGQ1YjhiZWE0YzhhN2MxMCIsImlhdCI6MTc1MTY0NjA2NCwiZXhwIjoxNzUxNzMyNDY0fQ.IZDtG12S-czoZlSuTUV34I3EH6RSpyjDVi0j_xUKxjQ"}} 
+ </msg>
+<msg time="2025-07-04T13:21:04.467981" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>cinema</arg>
+<arg>/auth/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-07-04T13:21:04.374988" elapsed="0.093024"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-07-04T13:21:04.468087" elapsed="0.000038"/>
+</return>
+<msg time="2025-07-04T13:21:04.468233" level="INFO">${token} = &lt;Response [200]&gt;</msg>
+<var>${token}</var>
+<arg>${ADMIN_EMAIL}</arg>
+<arg>${ADMIN_PASSWORD}</arg>
+<doc>Realiza login via API</doc>
+<status status="PASS" start="2025-07-04T13:21:04.374634" elapsed="0.093615"/>
+</kw>
+<kw name="Criar Sessao API">
+<msg time="2025-07-04T13:21:04.469500" level="FAIL">No keyword with name 'Criar Sessao API' found. Did you mean:
+    ApiKeywords.Criar Sessão API</msg>
+<var>${response}</var>
+<arg>${token}</arg>
+<arg>${id_do_filme}</arg>
+<arg>${id_do_teatro}</arg>
+<arg>2025-08-01</arg>
+<arg>20:00</arg>
+<status status="FAIL" start="2025-07-04T13:21:04.469463" elapsed="0.000079">No keyword with name 'Criar Sessao API' found. Did you mean:
+    ApiKeywords.Criar Sessão API</status>
+</kw>
+<kw name="Validate Session Creation Success" owner="ApiKeywords">
+<arg>${response}</arg>
+<doc>Valida se a criação da sessão foi bem-sucedida</doc>
+<status status="NOT RUN" start="2025-07-04T13:21:04.469804" elapsed="0.000025"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:04.374451" elapsed="0.095514">No keyword with name 'Criar Sessao API' found. Did you mean:
+    ApiKeywords.Criar Sessão API</status>
+</test>
+<kw name="End API Session" owner="base" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-07-04T13:21:04.470446" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-07-04T13:21:04.470400" elapsed="0.000091"/>
+</kw>
+<doc>Finaliza a sessão HTTP</doc>
+<status status="PASS" start="2025-07-04T13:21:04.470283" elapsed="0.000240"/>
+</kw>
+<status status="FAIL" start="2025-07-04T13:21:04.369037" elapsed="0.101505"/>
+</suite>
+<status status="FAIL" start="2025-07-04T13:21:04.368266" elapsed="0.102618"/>
+</suite>
+<status status="FAIL" start="2025-07-04T13:21:02.796066" elapsed="1.675068"/>
+</suite>
+<statistics>
+<total>
+<stat pass="7" fail="8" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Api" id="s1" pass="7" fail="8" skip="0">Api</stat>
+<stat name="Auth" id="s1-s1" pass="3" fail="1" skip="0">Api.Auth</stat>
+<stat name="Auth" id="s1-s1-s1" pass="3" fail="1" skip="0">Api.Auth.Auth</stat>
+<stat name="Movies" id="s1-s2" pass="4" fail="1" skip="0">Api.Movies</stat>
+<stat name="Movies" id="s1-s2-s1" pass="4" fail="1" skip="0">Api.Movies.Movies</stat>
+<stat name="Reservations" id="s1-s3" pass="0" fail="4" skip="0">Api.Reservations</stat>
+<stat name="Reservations" id="s1-s3-s1" pass="0" fail="4" skip="0">Api.Reservations.Reservations</stat>
+<stat name="Sessions" id="s1-s4" pass="0" fail="2" skip="0">Api.Sessions</stat>
+<stat name="Sessions" id="s1-s4-s1" pass="0" fail="2" skip="0">Api.Sessions.Sessions</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-07-04T13:21:03.169163" level="ERROR">Error in file 'C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\resources\base.robot' on line 9: Importing library 'JsonLibrary' failed: ModuleNotFoundError: No module named 'JsonLibrary'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Scripts\robot.exe
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\python313.zip
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\DLLs
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Lib
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Lib\site-packages</msg>
+<msg time="2025-07-04T13:21:03.408855" level="ERROR">Error in file 'C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\resources\base.robot' on line 9: Importing library 'JsonLibrary' failed: ModuleNotFoundError: No module named 'JsonLibrary'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Scripts\robot.exe
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\python313.zip
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\DLLs
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Lib
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Lib\site-packages</msg>
+<msg time="2025-07-04T13:21:03.965900" level="ERROR">Error in file 'C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\resources\base.robot' on line 9: Importing library 'JsonLibrary' failed: ModuleNotFoundError: No module named 'JsonLibrary'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Scripts\robot.exe
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\python313.zip
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\DLLs
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Lib
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Lib\site-packages</msg>
+<msg time="2025-07-04T13:21:04.371542" level="ERROR">Error in file 'C:\Users\eduar\03 - Projetos\PB-AWS-AI-for-QE\Cinema_Challenge\resources\base.robot' on line 9: Importing library 'JsonLibrary' failed: ModuleNotFoundError: No module named 'JsonLibrary'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Scripts\robot.exe
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\python313.zip
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\DLLs
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Lib
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313
+  C:\Users\eduar\AppData\Local\Programs\Python\Python313\Lib\site-packages</msg>
+</errors>
+</robot>
