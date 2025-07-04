@@ -1,0 +1,23 @@
+{
+  "valid_movie": {
+    "title": "Filme Teste",
+    "genre": "Ação",
+    "duration": 120,
+    "director": "Diretor Teste",
+    "description": "Descrição do filme teste"
+  },
+  "action_movie": {
+    "title": "Matrix",
+    "genre": "Ação",
+    "duration": 136,
+    "director": "Lana Wachowski",
+    "description": "Um programador descobre que a realidade é uma simulação"
+  },
+  "drama_movie": {
+    "title": "O Poderoso Chefão",
+    "genre": "Drama",
+    "duration": 175,
+    "director": "Francis Ford Coppola",
+    "description": "A história da família Corleone"
+  }
+}
